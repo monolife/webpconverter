@@ -72,7 +72,6 @@ func main(){
 	dir := flag.String("d", "", "directory to process")
 	flag.Parse()
 
-
 	if *dir != ""{
 		numCpus := runtime.NumCPU()
 		log.Printf("Running on %d CPUs\n", numCpus)
@@ -83,9 +82,11 @@ func main(){
 			conv(in, &wg)
 		}
 		wg.Wait()
-	}else{
+	}else if len(flag.Args()) > 0 {
 		webpFilename := flag.Args()[0]
 		convert(webpFilename)
+	}else{
+		log.Print("Nothing selected to convert")
 	}
 
 	// Code to measure
